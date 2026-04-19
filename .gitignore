@@ -1,18 +1,18 @@
 out.txt
 err.txt
-datasets/
-work_dirs/
-slurmjsonlabels/
-jsonfiles/
+./datasets/
+./work_dirs/
+./slurmjsonlabels/
+./jsonfiles/
 # auto generated file at installation
 detrex/config/configs
 detrex/version.py
 # experiment dirs
-outputs/
+./outputs/
 *.pth 
 *.pkl
-patch_images/
-pseudolabels/
+./patch_images/
+./pseudolabels/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -148,6 +148,6 @@ dmypy.json
 
 ZoeDepth/
 cuda_11.3*
-datasets/
+./datasets/
 output/
 wandb_output/
