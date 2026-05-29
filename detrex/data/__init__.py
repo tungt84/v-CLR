@@ -21,5 +21,10 @@ from .dataset_mappers import (
     MaskFormerInstanceDatasetMapper,
     MaskFormerPanopticDatasetMapper,
 )
-from . import datasets
+try:
+    from . import datasets
+except Exception:
+    # datasets may not be available in this copy or may cause circular imports;
+    # defer or ignore import errors here to allow partial package import.
+    datasets = None
 from .transforms import ColorAugSSDTransform
