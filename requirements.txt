@@ -8,7 +8,7 @@ black==22.3.0
 autoflake
 timm
 pytest
-https://github.com/scipy/scipy/archive/refs/tags/v1.7.3.zip
+git+https://github.com/scipy/scipy.git@v1.7.3
 psutil
 opencv-python
 wandb
