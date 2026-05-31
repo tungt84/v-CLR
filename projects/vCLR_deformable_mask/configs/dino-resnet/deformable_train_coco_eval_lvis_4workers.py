@@ -70,7 +70,8 @@ dataloader.train = L(build_detection_train_loader)(
         mask_on=True, # whether return mask
         img_format="RGB",
     ),
-    total_batch_size=16,
+    #total_batch_size=16,
+    total_batch_size=4, #TODO change to 4 for quick test, please change it back to 16 for actual training
     num_workers=4,
 )
  
@@ -139,7 +140,9 @@ dataloader.train.num_workers = 4
 # please notice that this is total batch size.
 # surpose you're using 4 gpus for training and the batch size for
 # each gpu is 16/4 = 4
-dataloader.train.total_batch_size = 16
+#dataloader.train.total_batch_size = 16
+#TODO change to 4 for quick test, please change it back to 16 for actual training
+dataloader.train.total_batch_size = 4
 
 # dump the testing results into output_dir for visualization
 dataloader.evaluator.output_dir = train.output_dir
@@ -157,7 +160,7 @@ train.model_ema.enabled=True
 #train.model_ema.enabled=False 
 train.model_ema.decay=0.999
 
-model.num_queries = 2000
+model.num_queries = 1000
 
 model.transformer.encoder.use_checkpoint=False 
 model.transformer.decoder.use_checkpoint=False
