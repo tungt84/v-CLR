@@ -152,7 +152,9 @@ model.num_classes = 1
 model.select_box_nums_for_evaluation=900
 
 # ema
-train.model_ema.enabled=True
+#train.model_ema.enabled=True
+#disable ema for now since it will cause some issues when loading the checkpoint for evaluation, and we will fix it in the future.
+train.model_ema.enabled=False 
 train.model_ema.decay=0.999
 
 model.num_queries = 2000
