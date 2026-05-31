@@ -71,7 +71,7 @@ dataloader.train = L(build_detection_train_loader)(
         img_format="RGB",
     ),
     #total_batch_size=16,
-    total_batch_size=4, #TODO change to 4 for quick test, please change it back to 16 for actual training
+    total_batch_size=2, #TODO change to 4 for quick test, please change it back to 16 for actual training
     num_workers=4,
 )
  
@@ -142,7 +142,7 @@ dataloader.train.num_workers = 4
 # each gpu is 16/4 = 4
 #dataloader.train.total_batch_size = 16
 #TODO change to 4 for quick test, please change it back to 16 for actual training
-dataloader.train.total_batch_size = 4
+dataloader.train.total_batch_size = 2
 
 # dump the testing results into output_dir for visualization
 dataloader.evaluator.output_dir = train.output_dir
