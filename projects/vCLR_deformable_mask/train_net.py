@@ -32,6 +32,7 @@ from detectron2.engine import (
 from detectron2.engine.defaults import create_ddp_model
 from detectron2.evaluation import inference_on_dataset, print_csv_format
 from detectron2.utils import comm
+from detrex.modeling import ema
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 
@@ -206,6 +207,9 @@ def do_train(args, cfg):
 
     model = create_ddp_model(model, **cfg.train.ddp)
 
+    # initialize model EMA support if enabled
+    ema.may_build_model_ema(cfg, model)
+
     trainer = Trainer(
         model=model,
         dataloader=train_loader,
@@ -218,11 +222,13 @@ def do_train(args, cfg):
         model,
         cfg.train.output_dir,
         trainer=trainer,
+        **(ema.may_get_ema_checkpointer(cfg, model) or {}),
     )
 
     trainer.register_hooks(
         [
             hooks.IterationTimer(),
+            ema.EMAHook(cfg, model) if getattr(cfg.train, "model_ema", None) and cfg.train.model_ema.enabled else None,
             hooks.LRScheduler(scheduler=instantiate(cfg.lr_multiplier)),
             hooks.PeriodicCheckpointer(checkpointer, **cfg.train.checkpointer)
             if comm.is_main_process()
@@ -256,7 +262,9 @@ def main(args):
         model = instantiate(cfg.model)
         model.to(cfg.train.device)
         model = create_ddp_model(model)
-        DetectionCheckpointer(model).load(cfg.train.init_checkpoint)
+        # ensure ema is available for evaluation
+        ema.may_build_model_ema(cfg, model)
+        DetectionCheckpointer(model, **(ema.may_get_ema_checkpointer(cfg, model) or {})).load(cfg.train.init_checkpoint)
         print(do_test(cfg, model))
     else:
         do_train(args, cfg)
