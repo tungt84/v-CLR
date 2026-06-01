@@ -72,7 +72,7 @@ dataloader.train = L(build_detection_train_loader)(
     ),
     #total_batch_size=16,
     total_batch_size=1, #TODO change to 4 for quick test, please change it back to 16 for actual training
-    num_workers=2,
+    num_workers=1,
 )
  
 dataloader.test = L(build_detection_test_loader)(
@@ -93,7 +93,7 @@ dataloader.test = L(build_detection_test_loader)(
         # instance_mask_format='bitmask',
         img_format="RGB", 
     ),
-    num_workers=4,
+    num_workers=1,
 )
 
 dataloader.evaluator = L(COCOEvaluatorCustom)(
@@ -135,7 +135,7 @@ optimizer.weight_decay = 1e-4
 optimizer.params.lr_factor_func = lambda module_name: 0.1 if "backbone" in module_name else 1
 
 # modify dataloader config
-dataloader.train.num_workers = 2
+dataloader.train.num_workers = 1
 
 # please notice that this is total batch size.
 # surpose you're using 4 gpus for training and the batch size for
