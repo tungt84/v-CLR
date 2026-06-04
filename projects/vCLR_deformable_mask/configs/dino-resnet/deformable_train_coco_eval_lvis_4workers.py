@@ -71,8 +71,8 @@ dataloader.train = L(build_detection_train_loader)(
         img_format="RGB",
     ),
     #total_batch_size=16,
-    total_batch_size=2, #TODO change to 4 for quick test, please change it back to 16 for actual training
-    num_workers=2,
+    total_batch_size=1, #TODO change to 4 for quick test, please change it back to 16 for actual training
+    num_workers=1,
 )
  
 dataloader.test = L(build_detection_test_loader)(
@@ -114,7 +114,7 @@ train.output_dir = "./output/dino_openworld"
 
 # max training iterations
 #train.max_iter = 60000
-train.max_iter = 324
+train.max_iter = 9720
 train.eval_period = 5000
 train.log_period = 200
 train.checkpointer.period = 5000
@@ -135,13 +135,13 @@ optimizer.weight_decay = 1e-4
 optimizer.params.lr_factor_func = lambda module_name: 0.1 if "backbone" in module_name else 1
 
 # modify dataloader config
-dataloader.train.num_workers = 2
+dataloader.train.num_workers = 1
 # please notice that this is total batch size.
 # surpose you're using 4 gpus for training and the batch size for
 # each gpu is 16/4 = 4
 #dataloader.train.total_batch_size = 16
 #TODO change to 4 for quick test, please change it back to 16 for actual training
-dataloader.train.total_batch_size = 2
+dataloader.train.total_batch_size = 1
 
 # dump the testing results into output_dir for visualization
 dataloader.evaluator.output_dir = train.output_dir
