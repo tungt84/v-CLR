@@ -114,7 +114,7 @@ train.output_dir = "./output/dino_openworld"
 
 # max training iterations
 #train.max_iter = 60000
-train.max_iter = 19440
+train.max_iter = 243000
 train.eval_period = 5000
 train.log_period = 200
 train.checkpointer.period = 5000
